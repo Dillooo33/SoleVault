@@ -1,6 +1,10 @@
+// Copy paste av ProductComponent fast med an Hero image, med andra ord en Placeholder
+// Ska göras om så endast utvalda produkter visas
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Hero from './HeroComponent'
 
 interface Shoe {
   id: number;
@@ -12,8 +16,6 @@ interface Shoe {
 const HomePage: React.FC = () => {
   const [shoes, setShoes] = useState<Shoe[]>([]);
 
-  // Starta databasen med npm run dev, i backend mappen.
-  // Eftersom att vår get endpoint konverterar vår databas till json så kan vi köra en fetch på själva databasen
   useEffect(() => {
     axios.get('http://localhost:8080/api/shoes')
       .then(response => {
@@ -26,10 +28,10 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>Alla Skor</h2>
+    <Hero></Hero>
+      <h2>Populära Skor</h2>
+      <h2><Link to={"/shoes"}>Alla Skor</Link></h2>
       <div className="shoe-list">
-
-        {/* Mappar / Renderar ut alla skor i databasen */}
         {shoes.map((shoe) => (
           <div key={shoe.id} className="shoe-card">
             <Link to={`/shoe/${shoe.id}`}>
