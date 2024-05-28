@@ -14,6 +14,7 @@ interface Shoe {
   id: number;
   name: string;
   price: number;
+  rating: number;
   image: string;
 }
 
@@ -25,14 +26,15 @@ db.serialize(() => {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     price REAL,
+    rating REAL,
     image TEXT
   )`);
 
   // Placeholder bilder
-  db.run(`INSERT INTO shoes (name, price, image) VALUES
-    ('Sneaker 1', 799, 'https://via.placeholder.com/150'),
-    ('Sneaker 2', 1249, 'https://via.placeholder.com/150'),
-    ('Sneaker 3', 949, 'https://via.placeholder.com/150')
+  db.run(`INSERT INTO shoes (name, price, rating, image) VALUES
+    ('Sneaker 1', 799, 2.5, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
+    ('Sneaker 2', 1249, 3.5, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
+    ('Sneaker 3', 949, 4.5, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png')
   `);
 });
 
