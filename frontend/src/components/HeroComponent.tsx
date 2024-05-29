@@ -16,7 +16,8 @@ const HeroSection = styled(Box)(({ theme }) => ({
     textAlign: 'center',
     padding: theme.spacing(2),
     paddingTop: theme.spacing(10),
-    paddingBottom: theme.spacing(6)
+    paddingBottom: theme.spacing(6),
+    marginTop: theme.spacing(-3)
 }))
 
 const Hero: React.FC = () => {
