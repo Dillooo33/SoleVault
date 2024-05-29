@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Hero from './HeroComponent';
+import { Button, Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Rating from '@mui/material/Rating';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Grid from '@mui/material/Grid';
 
 interface Shoe {
   id: number;
@@ -21,8 +21,6 @@ interface Shoe {
 const HomePage: React.FC = () => {
   const [shoes, setShoes] = useState<Shoe[]>([]);
 
-  // Starta databasen med npm run dev, i backend mappen.
-  // Eftersom att vår get endpoint konverterar vår databas till json så kan vi köra en fetch på själva databasen
   useEffect(() => {
     axios.get('http://localhost:8080/api/shoes')
       .then(response => {
@@ -35,16 +33,27 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="container">
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link to={"/"} color="inherit">
-          SoleVault
-        </Link>
-        <Typography color="text.primary">Alla Skor</Typography>
-      </Breadcrumbs>
-
-      <h2>Alla Skor</h2>
-      <Grid container spacing={2}>
-        {/* Mappar / Renderar ut alla skor i databasen */}
+      <Hero />
+      <h2>Populära Skor</h2>
+      <Link to={"/shoes"}>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            fontWeight: 'bold',
+            borderRadius: '50px',
+            paddingX: 4,
+            paddingY: 1.5,
+            backgroundColor: '#1B3445',
+            marginTop: '2rem',
+            minWidth: '198px',
+            fontSize: '1rem'
+          }}
+        >
+          Alla Skor
+        </Button>
+      </Link>
+      <Grid container spacing={2} justifyContent="center" alignItems="center">
         {shoes.map((shoe) => (
           <Grid item xs={12} sm={6} md={4} key={shoe.id} style={{ display: 'flex', justifyContent: 'center' }}>
             <Card sx={{
