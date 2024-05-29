@@ -12,8 +12,8 @@ const App: React.FC = () => {
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh">
       <CssBaseline />
-      <Header />
       <Router>
+      <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shoe/:id" element={<ProductComponent />} />

@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
   const [shoes, setShoes] = useState<Shoe[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/shoes')
+    axios.get('http://localhost:8080/api/featured')
       .then(response => {
         setShoes(response.data);
       })
