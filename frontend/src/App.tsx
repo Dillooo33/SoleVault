@@ -2,7 +2,10 @@ import React from 'react';
 import Header from './components/NavbarComponent';
 import HomePage from './components/HomeComponent';
 import ProductComponent from './components/ProductComponent';
-import ProductList from './components/ProductList'
+import ProductList from './components/ProductList';
+import ContactPage from './components/ContactComponent';
+import AboutPage from './components/AboutComponent';
+import LoginPage from './components/LoginComponent';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import './App.css';
@@ -15,6 +18,9 @@ const App: React.FC = () => {
       <Router>
       <Header />
         <Routes>
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/shoe/:id" element={<ProductComponent />} />
           <Route path="/shoes" element={<ProductList /> } />
