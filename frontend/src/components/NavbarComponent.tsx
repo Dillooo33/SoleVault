@@ -178,7 +178,7 @@ const Header: React.FC = () => {
                             >
                                 {/* Mapar ut alla skorna som matchar det som finns i sökfältet */}
                                 {searchResults.map((shoe: Shoe) => (
-                                      <Link key={shoe.id} to={`/shoe/${shoe.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                      <Link key={shoe.id} to={`/shoe/${shoe.id}`} onClick={() => setSearchInput('')} style={{ textDecoration: 'none', color: 'inherit' }}>
                                       <MenuItem>
                                           <Box display="flex" alignItems="center" width="100%">
                                               <img src={shoe.image} width={40} alt={shoe.name} />
