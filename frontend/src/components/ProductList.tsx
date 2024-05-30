@@ -9,6 +9,10 @@ import { CardActionArea } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Grid from '@mui/material/Grid';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 interface Shoe {
   id: number;
@@ -20,18 +24,25 @@ interface Shoe {
 
 const HomePage: React.FC = () => {
   const [shoes, setShoes] = useState<Shoe[]>([]);
+  const [filter, setFilter] = useState<string>('id');
+
 
   // Starta databasen med npm run dev, i backend mappen.
   // Eftersom att vår get endpoint konverterar vår databas till json så kan vi köra en fetch på själva databasen
   useEffect(() => {
-    axios.get('http://localhost:8080/api/shoes')
+    axios.get(`http://localhost:8080/api/shoes?order=${filter}`)
       .then(response => {
         setShoes(response.data);
       })
       .catch(error => {
         console.error('Fel vid hämtning av skorna!', error);
       });
-  }, []);
+  }, [filter]);
+
+  // Ändrar värdet på filter baserat på vilket alternativ som valts i filter-dropdown, hanteras med onChange
+  const handleFilterChange = (event: SelectChangeEvent<string>) => {
+    setFilter(event.target.value);
+  };
 
   return (
     <div className="container">
@@ -43,6 +54,24 @@ const HomePage: React.FC = () => {
       </Breadcrumbs>
 
       <h2>Alla Skor</h2>
+
+      {/* Filter formulär, drop down för att sortera produkterna baserat på preferens */}
+      <FormControl variant="outlined" style={{ marginBottom: '20px', minWidth: 200 }}>
+        <InputLabel>Sortera efter</InputLabel>
+        <Select
+          value={filter}
+          onChange={handleFilterChange}
+          label="Sortera efter"
+        >
+           <MenuItem value="id">Relevans</MenuItem>
+          <MenuItem value="rating DESC">Betyg</MenuItem>
+          <MenuItem value="price ASC">Pris: ökande</MenuItem>
+          <MenuItem value="price DESC">Pris: fallande</MenuItem>
+          <MenuItem value="name ASC">Namn: A-Ö</MenuItem>
+          <MenuItem value="name DESC">Namn: Ö-A</MenuItem>
+        </Select>
+      </FormControl>
+
       <Grid container spacing={2}>
         {/* Mappar / Renderar ut alla skor i databasen */}
         {shoes.map((shoe) => (

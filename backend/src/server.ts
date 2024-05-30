@@ -67,12 +67,15 @@ db.serialize(() => {
 ('Sport', 1155, 4.5, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png')`);
 });
 
-// Endpoint för att hämta alla skor
+// Endpoint för att hämta alla skor, med sök och filter funktionalitet
 app.get("/api/shoes", (req: Request, res: Response) => {
   const search = req.query.name ? `%${req.query.name}%` : "%";
+  const filter = req.query.order
+    ? req.query.order.toString().toLowerCase()
+    : "id";
 
   db.all(
-    "SELECT * FROM shoes WHERE name LIKE ?",
+    `SELECT * FROM shoes WHERE name LIKE ? ORDER BY ${filter}`,
     [search],
     (err: Error, rows: Shoe[]) => {
       if (err) {
