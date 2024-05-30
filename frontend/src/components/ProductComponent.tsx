@@ -7,6 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import { Box } from '@mui/material';
 
 interface Shoe {
   id: number;
@@ -34,6 +35,7 @@ const ProductComponent: React.FC = () => {
 
   return (
     <div>
+    <Box sx={{ padding: 4 }}>
    <Breadcrumbs aria-label="breadcrumb">
           <Link to={"/"} color="inherit">
           SoleVault
@@ -60,7 +62,7 @@ const ProductComponent: React.FC = () => {
         {shoe.price} kr
       </Typography>
       <Rating name="half-rating-read" defaultValue={shoe.rating} precision={0.5} readOnly />
-
+    </Box>
     </div>
   );
 };
