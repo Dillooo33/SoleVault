@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/NavbarComponent';
 import HomePage from './components/HomeComponent';
-import Home from './pages/Home'
+/* import Home from './pages/Home' */
 import ProductComponent from './components/ProductComponent';
 import ProductList from './components/ProductList'
 import CssBaseline from '@mui/material/CssBaseline';
