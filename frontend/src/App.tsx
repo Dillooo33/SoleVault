@@ -10,19 +10,19 @@ import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 const App: React.FC = () => {
-    return (
-        <Box display="flex" flexDirection="column" minHeight="100vh">
-            <CssBaseline />
-            <Header />
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/shoe/:id" element={<ProductComponent />} />
-                    <Route path="/shoes" element={<ProductList />} />
-                </Routes>
-            </Router>
-        </Box>
-    )
-}
+  return (
+    <Box display="flex" flexDirection="column" minHeight="100vh">
+      <CssBaseline />
+      <Router>
+      <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shoe/:id" element={<ProductComponent />} />
+          <Route path="/shoes" element={<ProductList /> } />
+        </Routes>
+      </Router>
+    </Box>
+  );
+};
 
 export default App
