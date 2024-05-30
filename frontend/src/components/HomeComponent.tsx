@@ -43,27 +43,27 @@ const HomePage: React.FC = () => {
       <Grid container alignItems="center" justifyContent="space-between" sx={{ marginBottom: 2 }}>
         <Grid item>
           <h2>Populära Skor</h2>
+            </Grid>
+            <Grid item>
+              <Link to={"/shoes"} style={{ textDecoration: 'none' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    fontWeight: 'bold',
+                    borderRadius: '50px',
+                    paddingX: 4,
+                    paddingY: 1.5,
+                    backgroundColor: '#1B3445',
+                    minWidth: '198px',
+                    fontSize: '1rem'
+                  }}
+                >
+                  Alla Skor
+                </Button>
+              </Link>
+            </Grid>
         </Grid>
-        <Grid item>
-          <Link to={"/shoes"} style={{ textDecoration: 'none' }}>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                fontWeight: 'bold',
-                borderRadius: '50px',
-                paddingX: 4,
-                paddingY: 1.5,
-                backgroundColor: '#1B3445',
-                minWidth: '198px',
-                fontSize: '1rem'
-              }}
-            >
-              Alla Skor
-            </Button>
-          </Link>
-        </Grid>
-      </Grid>
 
       {/* Lägger till divider som gör det tydligare att urskilja olika delar  */}
       <Box sx={{ paddingBottom: '16px' }}>
@@ -74,7 +74,7 @@ const HomePage: React.FC = () => {
           {shoes.map((shoe) => (
             <Grid item xs={12} sm={6} md={4} key={shoe.id} style={{ display: 'flex', justifyContent: 'center' }}>
               <Card sx={{
-                maxWidth: { xs: 345, sm: 400, md: 450, lg: 500 },
+                maxWidth: { xs: 480, sm: 400, md: 450, lg: 550 },
                 width: '100%',
                 position: 'relative' // Added to position the IconButton
               }}>
@@ -111,8 +111,8 @@ const HomePage: React.FC = () => {
               </Card>
             </Grid>
           ))}
-        </Grid>
-        </Box>
+      </Grid>
+      </Box>
     </div>
   );
 };

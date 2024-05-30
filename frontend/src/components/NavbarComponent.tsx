@@ -93,7 +93,7 @@ const Header: React.FC = () => {
     // Kör en fetch baserat på vad som finns i sökfältet
     useEffect(() => {
         if (searchInput.trim() !== '') {
-            fetch(`http://localhost:8080/api/shoes?name=${searchInput}`)
+            fetch(`http://localhost:8080/api/shoes?name=${searchInput}&order=name`)
                 .then(response => response.json())
                 .then(data => setSearchResults(data))
                 .catch(error => console.error('Error fetching search results:', error));

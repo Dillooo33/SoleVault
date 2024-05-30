@@ -75,7 +75,7 @@ const HomePage: React.FC = () => {
           {shoes.map((shoe) => (
             <Grid item xs={12} sm={6} md={4} key={shoe.id} style={{ display: 'flex', justifyContent: 'center' }}>
               <Card sx={{
-                maxWidth: { xs: 345, sm: 400, md: 450, lg: 500 },
+                maxWidth: { xs: 480, sm: 400, md: 450, lg: 550 },
                 width: '100%',
                 position: 'relative' // Added to position the IconButton
               }}>
