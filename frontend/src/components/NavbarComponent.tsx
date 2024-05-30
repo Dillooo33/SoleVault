@@ -120,13 +120,15 @@ const Header: React.FC = () => {
                 }}
             >
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
-                    <Box display="flex" alignItems="center">
-                        <img
-                            src={Logo}
-                            alt="SoleVault"
-                            style={{ height: '50px' }}
-                        />
-                    </Box>
+                    <Link to={"/"}>
+                        <Box display="flex" alignItems="center">
+                            <img
+                                src={Logo}
+                                alt="SoleVault"
+                                style={{ height: '50px' }}
+                            />
+                        </Box>
+                    </Link>
                     <Box display="flex">
                         <IconButton
                             color="inherit"
