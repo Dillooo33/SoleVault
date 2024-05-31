@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
-import { styled, alpha } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import Paper from '@mui/material/Paper';
-import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import React, { useState, useEffect } from 'react'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import InputBase from '@mui/material/InputBase'
+import { styled, alpha } from '@mui/material/styles'
+import SearchIcon from '@mui/icons-material/Search'
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Divider from '@mui/material/Divider'
+import Paper from '@mui/material/Paper'
+import MenuItem from '@mui/material/MenuItem'
+import { Link } from 'react-router-dom'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import cart from '../pages/cart'
 // Importera bilden
-import Logo from '../assets/bilder/Logo.png';
+import Logo from '../assets/bilder/Logo.png'
 
 interface Shoe {
-    id: number;
-    name: string;
-    price: number;
-    rating: number;
-    image: string;
-    featured: boolean;
-  }
+    id: number
+    name: string
+    price: number
+    rating: number
+    image: string
+    featured: boolean
+}
 
 // Styled komponent för search
 const Search = styled('div')(({ theme }) => ({
@@ -45,7 +46,7 @@ const Search = styled('div')(({ theme }) => ({
         width: '100%',
         height: '30px'
     }
-}));
+}))
 
 // Wrapper för search
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -56,7 +57,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
-}));
+}))
 
 // Style för i input fältet
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -69,38 +70,44 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             width: '20ch'
         }
     }
-}));
+}))
 
 // React.FC funktions komponent så att det blir typssäkert för typescript
 const Header: React.FC = () => {
-    const [drawerOpen, setDrawerOpen] = useState(false);
-    const [searchInput, setSearchInput] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [drawerOpen, setDrawerOpen] = useState(false)
+    const [searchInput, setSearchInput] = useState('')
+    const [searchResults, setSearchResults] = useState([])
 
     const handleDrawerOpen = () => {
-        setDrawerOpen(true);
-    };
+        setDrawerOpen(true)
+    }
 
     const handleDrawerClose = () => {
-        setDrawerOpen(false);
-    };
+        setDrawerOpen(false)
+    }
 
     // Hanterar sökfältet
-    const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchInput(event.target.value);
-    };
+    const handleSearchInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setSearchInput(event.target.value)
+    }
 
     // Kör en fetch baserat på vad som finns i sökfältet
     useEffect(() => {
         if (searchInput.trim() !== '') {
-            fetch(`http://localhost:8080/api/shoes?name=${searchInput}&order=name`)
-                .then(response => response.json())
-                .then(data => setSearchResults(data))
-                .catch(error => console.error('Error fetching search results:', error));
+            fetch(
+                `http://localhost:8080/api/shoes?name=${searchInput}&order=name`
+            )
+                .then((response) => response.json())
+                .then((data) => setSearchResults(data))
+                .catch((error) =>
+                    console.error('Error fetching search results:', error)
+                )
         } else {
-            setSearchResults([]);
+            setSearchResults([])
         }
-    }, [searchInput]);
+    }, [searchInput])
 
     return (
         <>
@@ -115,11 +122,13 @@ const Header: React.FC = () => {
             >
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Box display="flex" alignItems="center">
-                        <img
-                            src={Logo}
-                            alt="SoleVault"
-                            style={{ height: '50px' }}
-                        />
+                        <Link to={'/'}>
+                            <img
+                                src={Logo}
+                                alt="SoleVault"
+                                style={{ height: '50px' }}
+                            />
+                        </Link>
                     </Box>
                     <Box display="flex">
                         <IconButton
@@ -127,16 +136,20 @@ const Header: React.FC = () => {
                             sx={{
                                 width: '44px',
                                 height: '44px',
-                                marginTop: '1rem'
+                                lineHeight: '1rem'
                             }}
                         >
-                            <ShoppingCartIcon sx={{ fontSize: '30px' }} />
+                            <Link to={'cart'}>
+                                <ShoppingCartIcon
+                                    sx={{ fontSize: '25px', color: 'black' }}
+                                />
+                            </Link>
                         </IconButton>
                         <IconButton
                             sx={{
                                 width: '44px',
                                 height: '44px',
-                                marginTop: '1rem'
+                                lineHeight: '1rem'
                             }}
                             color="inherit"
                             onClick={
@@ -178,16 +191,38 @@ const Header: React.FC = () => {
                             >
                                 {/* Mapar ut alla skorna som matchar det som finns i sökfältet */}
                                 {searchResults.map((shoe: Shoe) => (
-                                      <Link key={shoe.id} to={`/shoe/${shoe.id}`} onClick={() => setSearchInput('')} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                      <MenuItem>
-                                          <Box display="flex" alignItems="center" width="100%">
-                                              <img src={shoe.image} width={40} alt={shoe.name} />
-                                              <Box ml={2} flexGrow={1}>{shoe.name}</Box>
-                                              <Box >{<ArrowForwardIosIcon></ArrowForwardIosIcon>}</Box>
-                                          </Box>
-                                      </MenuItem>
-                                      <Divider />
-                                  </Link>
+                                    <Link
+                                        key={shoe.id}
+                                        to={`/shoe/${shoe.id}`}
+                                        onClick={() => setSearchInput('')}
+                                        style={{
+                                            textDecoration: 'none',
+                                            color: 'inherit'
+                                        }}
+                                    >
+                                        <MenuItem>
+                                            <Box
+                                                display="flex"
+                                                alignItems="center"
+                                                width="100%"
+                                            >
+                                                <img
+                                                    src={shoe.image}
+                                                    width={40}
+                                                    alt={shoe.name}
+                                                />
+                                                <Box ml={2} flexGrow={1}>
+                                                    {shoe.name}
+                                                </Box>
+                                                <Box>
+                                                    {
+                                                        <ArrowForwardIosIcon></ArrowForwardIosIcon>
+                                                    }
+                                                </Box>
+                                            </Box>
+                                        </MenuItem>
+                                        <Divider />
+                                    </Link>
                                 ))}
                             </Paper>
                         )}
@@ -242,7 +277,7 @@ const Header: React.FC = () => {
                 </Box>
             </Drawer>
         </>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header

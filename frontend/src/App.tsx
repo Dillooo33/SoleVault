@@ -4,6 +4,7 @@ import Header from './components/NavbarComponent'
 import Home from './pages/Home'
 import ProductComponent from './components/ProductComponent'
 import ProductList from './components/ProductList'
+import Cart from './pages/cart'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import './App.css'
@@ -19,6 +20,7 @@ const App: React.FC = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/shoe/:id" element={<ProductComponent />} />
                     <Route path="/shoes" element={<ProductList />} />
+                    <Route path="/cart" element={<Cart />} />
                 </Routes>
             </Router>
         </Box>
