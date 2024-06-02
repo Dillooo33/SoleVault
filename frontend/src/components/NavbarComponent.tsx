@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import InputBase from '@mui/material/InputBase'
-import { styled, alpha } from '@mui/material/styles'
+import {
+    AppBar,
+    Toolbar,
+    IconButton,
+    InputBase,
+    styled,
+    alpha,
+    Box,
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    Divider,
+    Paper,
+    MenuItem
+} from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import Box from '@mui/material/Box'
-import Drawer from '@mui/material/Drawer'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
-import Paper from '@mui/material/Paper'
-import MenuItem from '@mui/material/MenuItem'
 import { Link } from 'react-router-dom'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 // Importera bilden

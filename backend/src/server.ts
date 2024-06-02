@@ -148,12 +148,14 @@ app.get('/cart', (req, res) => {
             res.status(500).send(err.message)
             return
         }
+        const total = rows.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+        )
+        const shipping = total > 899 ? 0 : 50
         const summary: CartSummary = {
-            total: rows.reduce(
-                (sum, item) => sum + item.price * item.quantity,
-                0
-            ),
-            shipping: rows.length > 0 ? 0 : 50
+            total,
+            shipping
         }
         res.json({ items: rows, summary })
     })
