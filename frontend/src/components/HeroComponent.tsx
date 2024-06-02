@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { Link } from 'react-router-dom'
 import HeroImg from '../assets/bilder/Hero.png'
 
 const HeroSection = styled(Box)(({ theme }) => ({
@@ -39,22 +40,24 @@ const Hero: React.FC = () => {
             >
                 PÅ SOLEVAULT
             </Typography>
-            <Button
-                variant="contained"
-                color="primary"
-                sx={{
-                    fontWeight: 'bold',
-                    borderRadius: '50px',
-                    paddingX: 4,
-                    paddingY: 1.5,
-                    backgroundColor: '#1B3445',
-                    marginTop: '2rem',
-                    minWidth: '198px',
-                    fontSize: '1rem'
-                }}
-            >
-                Till Rean
-            </Button>
+            <Link to={'/shoes'}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                        fontWeight: 'bold',
+                        borderRadius: '50px',
+                        paddingX: 4,
+                        paddingY: 1.5,
+                        backgroundColor: '#1B3445',
+                        marginTop: '2rem',
+                        minWidth: '198px',
+                        fontSize: '1rem'
+                    }}
+                >
+                    Till Rean
+                </Button>
+            </Link>
         </HeroSection>
     )
 }
