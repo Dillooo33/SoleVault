@@ -70,7 +70,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             width: '20ch'
         }
     }
-}))
+}));
+
+const StyledLink = styled(Link)({
+    textDecoration: 'none',
+    color: 'inherit',
+    display: 'block',  // Ensures the entire ListItem is clickable
+});
 
 // React.FC funktions komponent så att det blir typssäkert för typescript
 const Header: React.FC = () => {
@@ -121,15 +127,15 @@ const Header: React.FC = () => {
                 }}
             >
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
-                    <Box display="flex" alignItems="center">
-                        <Link to={'/'}>
+                    <Link to={"/"}>
+                        <Box display="flex" alignItems="center">
                             <img
                                 src={Logo}
                                 alt="SoleVault"
                                 style={{ height: '50px' }}
                             />
-                        </Link>
-                    </Box>
+                        </Box>
+                    </Link>
                     <Box display="flex">
                         <IconButton
                             color="inherit"
@@ -253,26 +259,36 @@ const Header: React.FC = () => {
                     onKeyDown={handleDrawerClose}
                 >
                     <List>
-                        <ListItem button>
-                            <ListItemText primary="Home" />
-                        </ListItem>
-                        <Divider />
-                        <ListItem button>
-                            <ListItemText primary="About Us" />
-                        </ListItem>
-                        <Divider />
-                        <ListItem>
-                            <ListItemText primary="Shop" />
-                        </ListItem>
-                        <Divider />
-                        <ListItem button>
-                            <ListItemText primary="Contact Us" />
-                        </ListItem>
-                        <Divider />
-                        <ListItem button>
-                            <ListItemText primary="Login" />
-                        </ListItem>
-                        <Divider />
+                        <StyledLink to={"/"}>
+                            <ListItem button >
+                                <ListItemText primary="Hem" />
+                            </ListItem>
+                        </StyledLink>
+                    <Divider />
+                        <StyledLink to={"/shoes"}>
+                            <ListItem button>
+                                <ListItemText primary="Butik" />
+                            </ListItem>
+                        </StyledLink>
+                    <Divider />
+                        <StyledLink to={"/about"}>
+                            <ListItem button>
+                                <ListItemText primary="Om Oss" />
+                            </ListItem>
+                        </StyledLink>
+                    <Divider />
+                        <StyledLink to={"/contact"}>
+                            <ListItem button>
+                                <ListItemText primary="Kontakta Oss" />
+                            </ListItem>
+                        </StyledLink>
+                    <Divider />
+                        <StyledLink to={"/login"}>
+                            <ListItem button>
+                                <ListItemText primary="Logga in" />
+                            </ListItem>
+                        </StyledLink>
+                    <Divider />
                     </List>
                 </Box>
             </Drawer>
