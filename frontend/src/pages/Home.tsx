@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Typography, Button, Divider, Grid } from '@mui/material'
+import {
+    Box,
+    Typography,
+    Button,
+    Divider,
+    Grid,
+    Card,
+    CardContent,
+    CardMedia,
+    CardActionArea,
+    Rating
+} from '@mui/material'
 import Hero from '../components/HeroComponent'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import { CardActionArea } from '@mui/material'
-import Rating from '@mui/material/Rating'
+import IconButton from '@mui/material/IconButton'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 
 interface Shoe {
     id: number
@@ -31,6 +39,26 @@ const Home: React.FC = () => {
             })
     }, [])
 
+    const handleAddToCart = (shoe: Shoe) => {
+        axios
+            .post('http://localhost:8080/cart', {
+                name: shoe.name,
+                size: 'M',
+                color: 'Black',
+                quantity: 1,
+                price: shoe.price
+            })
+            .then((response) => {
+                console.log('Item added to cart:', response.data)
+            })
+            .catch((error) => {
+                console.error(
+                    'There was an error adding the item to the cart!',
+                    error
+                )
+            })
+    }
+
     return (
         <>
             <Hero />
@@ -40,11 +68,9 @@ const Home: React.FC = () => {
                         display="flex"
                         justifyContent="space-between"
                         alignItems="center"
+                        sx={{ marginBottom: 2 }}
                     >
-                        <Typography
-                            variant="body1"
-                            sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}
-                        >
+                        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
                             Sneakers
                         </Typography>
                         <Link to={'/shoes'}>
@@ -52,10 +78,10 @@ const Home: React.FC = () => {
                                 variant="contained"
                                 color="primary"
                                 sx={{
-                                    fontWeight: 700,
+                                    fontWeight: 'bold',
                                     borderRadius: 50,
-                                    paddingX: 1.5,
-                                    paddingY: 1,
+                                    paddingX: 4,
+                                    paddingY: 1.2,
                                     backgroundColor: '#1B3445',
                                     fontSize: '0.8rem'
                                 }}
@@ -64,13 +90,8 @@ const Home: React.FC = () => {
                             </Button>
                         </Link>
                     </Box>
-                    <Divider sx={{ marginTop: 1 }} />
-                    <Grid
-                        container
-                        spacing={2}
-                        justifyContent="center"
-                        alignItems="center"
-                    >
+                    <Divider sx={{ marginBottom: 2 }} />
+                    <Grid container spacing={4}>
                         {shoes.map((shoe) => (
                             <Grid
                                 item
@@ -86,19 +107,32 @@ const Home: React.FC = () => {
                                 <Card
                                     sx={{
                                         maxWidth: {
-                                            xs: 345,
+                                            xs: 480,
                                             sm: 400,
                                             md: 450,
-                                            lg: 500
+                                            lg: 550
                                         },
-                                        width: '100%'
+                                        width: '100%',
+                                        position: 'relative'
                                     }}
                                 >
-                                    <CardActionArea>
-                                        <Link to={`/shoe/${shoe.id}`}>
+                                    <CardActionArea
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        <Link
+                                            to={`/shoe/${shoe.id}`}
+                                            style={{
+                                                textDecoration: 'none',
+                                                color: 'inherit'
+                                            }}
+                                        >
                                             <CardMedia
                                                 component="img"
-                                                height="140"
+                                                sx={{
+                                                    height: '300px',
+                                                    objectFit: 'contain',
+                                                    padding: 1
+                                                }}
                                                 image={shoe.image}
                                                 alt={shoe.name}
                                             />
@@ -126,6 +160,18 @@ const Home: React.FC = () => {
                                             </CardContent>
                                         </Link>
                                     </CardActionArea>
+                                    <IconButton
+                                        color="primary"
+                                        aria-label="add to shopping cart"
+                                        sx={{
+                                            position: 'absolute',
+                                            bottom: 16,
+                                            right: 16
+                                        }}
+                                        onClick={() => handleAddToCart(shoe)}
+                                    >
+                                        <AddShoppingCartIcon />
+                                    </IconButton>
                                 </Card>
                             </Grid>
                         ))}

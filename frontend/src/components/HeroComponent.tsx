@@ -43,7 +43,6 @@ const Hero: React.FC = () => {
             <Link to={'/shoes'}>
                 <Button
                     variant="contained"
-                    color="primary"
                     sx={{
                         fontWeight: 'bold',
                         borderRadius: '50px',

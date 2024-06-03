@@ -7,11 +7,7 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
-import { Box } from '@mui/material'
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Box, Select, MenuItem } from '@mui/material'
 import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 
@@ -77,6 +73,7 @@ const ProductComponent: React.FC = () => {
                     height="400"
                     image={shoe.image}
                     alt={shoe.name}
+                    sx={{ objectFit: 'contain' }}
                 />
 
                 <Typography gutterBottom variant="h5" component="div">
@@ -87,73 +84,35 @@ const ProductComponent: React.FC = () => {
                     {shoe.price} kr
                 </Typography>
 
-                <Accordion defaultExpanded>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
-                    >
-                        <Typography>Beskrivning</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Suspendisse malesuada lacus ex, sit amet
-                            blandit leo lobortis eget.
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel2-content"
-                        id="panel2-header"
-                    >
-                        <Typography>Betyg</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            Namn: Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit. Suspendisse malesuada lacus ex, sit
-                            amet blandit leo lobortis eget.
-                        </Typography>
-                        <Rating
-                            name="half-rating-read"
-                            defaultValue={shoe.rating}
-                            precision={0.5}
-                            readOnly
-                        />
+                <Typography gutterBottom variant="h6" component="div">
+                    {/* Ändra denna sen så att färgen matchar med skorna */}
+                    Färg: Vit
+                </Typography>
 
-                        <Typography>
-                            Namn: Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit. Suspendisse malesuada lacus ex, sit
-                            amet blandit leo lobortis eget.
-                        </Typography>
-                        <Rating
-                            name="half-rating-read"
-                            defaultValue={shoe.rating}
-                            precision={0.5}
-                            readOnly
-                        />
-
-                        <Typography>
-                            Namn: Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit. Suspendisse malesuada lacus ex, sit
-                            amet blandit leo lobortis eget.
-                        </Typography>
-                        <Rating
-                            name="half-rating-read"
-                            defaultValue={shoe.rating}
-                            precision={0.5}
-                            readOnly
-                        />
-                    </AccordionDetails>
-                </Accordion>
+                <Box sx={{ display: 'flex', alignItems: 'center', py: '1rem' }}>
+                    <Select
+                        defaultValue=""
+                        displayEmpty
+                        fullWidth
+                        sx={{ borderRadius: '50px' }}
+                    >
+                        <MenuItem value="" disabled>
+                            Välj storlek
+                        </MenuItem>
+                        <MenuItem value={38}>38</MenuItem>
+                        <MenuItem value={39}>39</MenuItem>
+                        <MenuItem value={40}>40</MenuItem>
+                    </Select>
+                </Box>
 
                 <Button
                     variant="contained"
                     color="primary"
+                    fullWidth
                     sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         fontWeight: 'bold',
                         borderRadius: '50px',
                         paddingX: 4,
@@ -161,12 +120,13 @@ const ProductComponent: React.FC = () => {
                         backgroundColor: '#57C7E5',
                         minWidth: '198px',
                         fontSize: '1rem',
-                        color: 'black'
+                        color: 'black',
+                        textTransform: 'none'
                     }}
                     onClick={handleAddToCart}
                 >
                     Lägg till i kundvagnen
-                    <AddShoppingCartIcon />
+                    <AddShoppingCartIcon sx={{ marginLeft: 2 }} />
                 </Button>
             </Box>
         </div>
