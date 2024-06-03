@@ -1,77 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Hero from './HeroComponent';
+import { Button, Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Rating from '@mui/material/Rating';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import Box from '@mui/material/Box'; // Ensure Box is imported
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+
 
 interface Shoe {
-    id: number
-    name: string
-    price: number
-    rating: number
-    image: string
+  id: number;
+  name: string;
+  price: number;
+  rating: number;
+  image: string;
 }
 
-const Home: React.FC = () => {
-    const [shoes, setShoes] = useState<Shoe[]>([])
-    const [filter, setFilter] = useState<string>('id');
+const HomePage: React.FC = () => {
+  const [shoes, setShoes] = useState<Shoe[]>([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/shoes?order=${filter}`)
+    axios.get('http://localhost:8080/api/featured')
       .then(response => {
         setShoes(response.data);
       })
       .catch(error => {
         console.error('Fel vid hämtning av skorna!', error);
       });
-  }, [filter]);
-
-  const handleFilterChange = (event: SelectChangeEvent<string>) => {
-    setFilter(event.target.value);
-  };
+  }, []);
 
   return (
     <div className="container">
+      <Hero />
       <Box sx={{ padding: 4 }}>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link to={"/"} style={{ textDecoration: 'none', color: 'inherit' }}>
-            SoleVault
-          </Link>
-          <Typography color="text.primary">Alla Skor</Typography>
-        </Breadcrumbs>
+      <Grid container alignItems="center" justifyContent="space-between" sx={{ marginBottom: 2 }}>
+        <Grid item>
+          <h2>Populära Skor</h2>
+            </Grid>
+            <Grid item>
+              <Link to={"/shoes"} style={{ textDecoration: 'none' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    fontWeight: 'bold',
+                    borderRadius: '50px',
+                    paddingX: 4,
+                    paddingY: 1.5,
+                    backgroundColor: '#1B3445',
+                    minWidth: '198px',
+                    fontSize: '1rem'
+                  }}
+                >
+                  Alla Skor
+                </Button>
+              </Link>
+            </Grid>
+        </Grid>
 
-        <h2 style={{ padding: '0 16px' }}>Alla Skor</h2>
+      {/* Lägger till divider som gör det tydligare att urskilja olika delar  */}
+      <Box sx={{ paddingBottom: '16px' }}>
+        <Divider />
+      </Box>
 
-        <FormControl variant="outlined" style={{ marginBottom: '20px', minWidth: 200, padding: '0 16px' }}>
-          <InputLabel>Sortera efter</InputLabel>
-          <Select
-            value={filter}
-            onChange={handleFilterChange}
-            label="Sortera efter"
-          >
-            <MenuItem value="id">Relevans</MenuItem>
-            <MenuItem value="rating DESC">Betyg</MenuItem>
-            <MenuItem value="price ASC">Pris: ökande</MenuItem>
-            <MenuItem value="price DESC">Pris: fallande</MenuItem>
-            <MenuItem value="name ASC">Namn: A-Ö</MenuItem>
-            <MenuItem value="name DESC">Namn: Ö-A</MenuItem>
-          </Select>
-        </FormControl>
-
-        <Grid container spacing={4}>
+      <Grid container spacing={4}>
           {shoes.map((shoe) => (
             <Grid item xs={12} sm={6} md={4} key={shoe.id} style={{ display: 'flex', justifyContent: 'center' }}>
               <Card sx={{
@@ -112,10 +111,10 @@ const Home: React.FC = () => {
               </Card>
             </Grid>
           ))}
-        </Grid>
+      </Grid>
       </Box>
     </div>
   );
 };
 
-export default Home
+export default HomePage;
