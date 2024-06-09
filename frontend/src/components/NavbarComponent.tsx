@@ -14,16 +14,16 @@ import {
     Divider,
     Paper,
     MenuItem,
-    Badge
+    Badge,
+    Button // Import Button
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom' // Import useNavigate
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import axios from 'axios'
-// Importera bilden
 import Logo from '../assets/bilder/Logo.png'
 
 interface Shoe {
@@ -52,7 +52,6 @@ const Search = styled('div')(({ theme }) => ({
     }
 }))
 
-// Wrapper för search
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -63,7 +62,6 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center'
 }))
 
-// Style för i input fältet
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: '#000000',
     '& .MuiInputBase-input': {
@@ -79,30 +77,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const StyledLink = styled(Link)({
     textDecoration: 'none',
     color: 'inherit',
-    display: 'block' // Ensures the entire ListItem is clickable
+    display: 'block'
 })
 
-// React.FC funktions komponent så att det blir typssäkert för typescript
 const Header: React.FC = () => {
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [searchInput, setSearchInput] = useState('')
-    const [searchResults, setSearchResults] = useState([])
+    const [searchResults, setSearchResults] = useState<Shoe[]>([])
     const [cartCount, setCartCount] = useState(0)
+    const navigate = useNavigate() 
 
     useEffect(() => {
-        // Hämta antalet varor i kundvagnen
         const fetchCartCount = async () => {
             try {
-                const response = await axios.get(
-                    'http://localhost:8080/cart/count'
-                )
+                const response = await axios.get('http://localhost:8080/cart/count')
                 setCartCount(response.data.count)
             } catch (error) {
                 console.error('Error fetching cart count:', error)
             }
         }
         fetchCartCount()
-    }, [])
+    }, [cartCount])
 
     const handleDrawerOpen = () => {
         setDrawerOpen(true)
@@ -112,28 +107,25 @@ const Header: React.FC = () => {
         setDrawerOpen(false)
     }
 
-    // Hanterar sökfältet
-    const handleSearchInputChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value)
     }
 
-    // Kör en fetch baserat på vad som finns i sökfältet
     useEffect(() => {
         if (searchInput.trim() !== '') {
-            fetch(
-                `http://localhost:8080/api/shoes?name=${searchInput}&order=name`
-            )
-                .then((response) => response.json())
-                .then((data) => setSearchResults(data))
-                .catch((error) =>
-                    console.error('Error fetching search results:', error)
-                )
+            axios
+                .get(`http://localhost:8080/api/shoes?name=${searchInput}&order=name`)
+                .then((response) => setSearchResults(response.data))
+                .catch((error) => console.error('Error fetching search results:', error))
         } else {
             setSearchResults([])
         }
     }, [searchInput])
+
+    const handleShowAllResults = () => {
+        navigate(`/search?query=${searchInput}`)
+        setSearchInput('')
+    }
 
     return (
         <>
@@ -149,11 +141,7 @@ const Header: React.FC = () => {
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Link to={'/'}>
                         <Box display="flex" alignItems="center">
-                            <img
-                                src={Logo}
-                                alt="SoleVault"
-                                style={{ height: '50px' }}
-                            />
+                            <img src={Logo} alt="SoleVault" style={{ height: '50px' }} />
                         </Box>
                     </Link>
                     <Box display="flex">
@@ -165,15 +153,9 @@ const Header: React.FC = () => {
                                 lineHeight: '1rem'
                             }}
                         >
-                            {/* cartCount ändras inte dynamiskt behöver ladda om sidan för att siffran ska bli rätt */}
                             <Link to={'/cart'}>
                                 <Badge badgeContent={cartCount} color="error">
-                                    <ShoppingCartIcon
-                                        sx={{
-                                            fontSize: '25px',
-                                            color: 'black'
-                                        }}
-                                    />
+                                    <ShoppingCartIcon sx={{ fontSize: '25px', color: 'black' }} />
                                 </Badge>
                             </Link>
                         </IconButton>
@@ -184,11 +166,7 @@ const Header: React.FC = () => {
                                 lineHeight: '1rem'
                             }}
                             color="inherit"
-                            onClick={
-                                drawerOpen
-                                    ? handleDrawerClose
-                                    : handleDrawerOpen
-                            }
+                            onClick={drawerOpen ? handleDrawerClose : handleDrawerOpen}
                         >
                             {drawerOpen ? (
                                 <CloseIcon sx={{ fontSize: '30px' }} />
@@ -221,8 +199,7 @@ const Header: React.FC = () => {
                                     overflowY: 'auto'
                                 }}
                             >
-                                {/* Mapar ut alla skorna som matchar det som finns i sökfältet */}
-                                {searchResults.map((shoe: Shoe) => (
+                                {searchResults.map((shoe) => (
                                     <Link
                                         key={shoe.id}
                                         to={`/shoe/${shoe.id}`}
@@ -233,29 +210,22 @@ const Header: React.FC = () => {
                                         }}
                                     >
                                         <MenuItem>
-                                            <Box
-                                                display="flex"
-                                                alignItems="center"
-                                                width="100%"
-                                            >
-                                                <img
-                                                    src={shoe.image}
-                                                    width={40}
-                                                    alt={shoe.name}
-                                                />
+                                            <Box display="flex" alignItems="center" width="100%">
+                                                <img src={shoe.image} width={40} alt={shoe.name} />
                                                 <Box ml={2} flexGrow={1}>
                                                     {shoe.name}
                                                 </Box>
                                                 <Box>
-                                                    {
-                                                        <ArrowForwardIosIcon></ArrowForwardIosIcon>
-                                                    }
+                                                    <ArrowForwardIosIcon />
                                                 </Box>
                                             </Box>
                                         </MenuItem>
                                         <Divider />
                                     </Link>
                                 ))}
+                                <Button fullWidth onClick={handleShowAllResults}>
+                                    Visa alla resultat ({searchResults.length})
+                                </Button>
                             </Paper>
                         )}
                     </Search>
@@ -270,7 +240,6 @@ const Header: React.FC = () => {
                     keepMounted: true
                 }}
                 PaperProps={{
-                    // Så att drawer inte täcker navbaren
                     sx: {
                         width: '100%',
                         height: 'calc(100vh - 64px)',

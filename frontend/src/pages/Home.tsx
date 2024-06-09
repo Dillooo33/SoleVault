@@ -26,13 +26,22 @@ interface Shoe {
     image: string
 }
 
+interface CartItem {
+    id: number;
+    name: string;
+    size: string;
+    color: string;
+    quantity: number;
+    price: number;
+}
+
 const Home: React.FC = () => {
     const [shoes, setShoes] = useState<Shoe[]>([])
     const [inCart, setInCart] = useState<{ [key: number]: boolean }>({})
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/api/shoes')
+            .get('http://localhost:8080/api/featured')
             .then((response) => {
                 setShoes(response.data)
             })
@@ -45,7 +54,7 @@ const Home: React.FC = () => {
             .then((response) => {
                 const cartItems = response.data.items
                 const inCartMap: { [key: number]: boolean } = {}
-                cartItems.forEach((item: any) => {
+                cartItems.forEach((item: CartItem) => {
                     inCartMap[item.id] = true
                 })
                 setInCart(inCartMap)

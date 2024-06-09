@@ -7,6 +7,7 @@ import ContactPage from './pages/Contact'
 import AboutPage from './pages/About'
 import LoginPage from './pages/Login'
 import FooterCard from './components/FooterComponent'
+import SearchResults from './pages/SearchResults'
 import Cart from './pages/cart'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
@@ -27,6 +28,7 @@ const App: React.FC = () => {
                     <Route path="/shoe/:id" element={<ProductComponent />} />
                     <Route path="/shoes" element={<ProductList />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/search" element={<SearchResults />} />
                 </Routes>
                 <FooterCard />
             </Router>

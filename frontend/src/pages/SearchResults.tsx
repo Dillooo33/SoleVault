@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import axios from 'axios'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -9,14 +9,10 @@ import { CardActionArea } from '@mui/material'
 import Rating from '@mui/material/Rating'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Grid from '@mui/material/Grid'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
-import CheckCircleIcon from '@mui/icons-material/RemoveShoppingCart'
-import Box from '@mui/material/Box' // Ensure Box is imported
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import Box from '@mui/material/Box'
 
 interface Shoe {
     id: number
@@ -35,20 +31,19 @@ interface CartItem {
     price: number;
 }
 
-const Home: React.FC = () => {
-    const [shoes, setShoes] = useState<Shoe[]>([])
-    const [filter, setFilter] = useState<string>('id')
+const SearchResults: React.FC = () => {
+    const location = useLocation()
+    const searchQuery = new URLSearchParams(location.search).get('query')
+    const [searchResults, setSearchResults] = useState<Shoe[]>([])
     const [inCart, setInCart] = useState<{ [key: number]: boolean }>({})
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:8080/api/shoes?order=${filter}`)
-            .then((response) => {
-                setShoes(response.data)
-            })
-            .catch((error) => {
-                console.error('Fel vid hämtning av skorna!', error)
-            })
+        if (searchQuery) {
+            axios
+                .get(`http://localhost:8080/api/shoes?name=${searchQuery}&order=name`)
+                .then((response) => setSearchResults(response.data))
+                .catch((error) => console.error('Error fetching search results:', error))
+        }
 
         axios
             .get('http://localhost:8080/cart')
@@ -60,14 +55,8 @@ const Home: React.FC = () => {
                 })
                 setInCart(inCartMap)
             })
-            .catch((error) => {
-                console.error('Fel vid hämtning av kundvagnen!', error)
-            })
-    }, [filter])
-
-    const handleFilterChange = (event: SelectChangeEvent<string>) => {
-        setFilter(event.target.value)
-    }
+            .catch((error) => console.error('Error fetching cart items!', error))
+    }, [searchQuery])
 
     const handleAddToCart = (shoe: Shoe) => {
         axios
@@ -82,12 +71,7 @@ const Home: React.FC = () => {
                 console.log('Item added to cart:', response.data)
                 setInCart((prevInCart) => ({ ...prevInCart, [shoe.id]: true }))
             })
-            .catch((error) => {
-                console.error(
-                    'There was an error adding the item to the cart!',
-                    error
-                )
-            })
+            .catch((error) => console.error('There was an error adding the item to the cart!', error))
     }
 
     return (
@@ -100,36 +84,13 @@ const Home: React.FC = () => {
                     >
                         SoleVault
                     </Link>
-                    <Typography color="text.primary">Alla Skor</Typography>
+                    <Typography color="text.primary">Sökresultat för "{searchQuery}"</Typography>
                 </Breadcrumbs>
 
-                <h2 style={{ padding: '0 16px' }}>Alla Skor</h2>
-
-                <FormControl
-                    variant="outlined"
-                    style={{
-                        marginBottom: '20px',
-                        minWidth: 200,
-                        padding: '0 16px'
-                    }}
-                >
-                    <InputLabel>Sortera efter</InputLabel>
-                    <Select
-                        value={filter}
-                        onChange={handleFilterChange}
-                        label="Sortera efter"
-                    >
-                        <MenuItem value="id">Relevans</MenuItem>
-                        <MenuItem value="rating DESC">Betyg</MenuItem>
-                        <MenuItem value="price ASC">Pris: ökande</MenuItem>
-                        <MenuItem value="price DESC">Pris: fallande</MenuItem>
-                        <MenuItem value="name ASC">Namn: A-Ö</MenuItem>
-                        <MenuItem value="name DESC">Namn: Ö-A</MenuItem>
-                    </Select>
-                </FormControl>
+                <h2 style={{ padding: '0 16px' }}>Sökresultat för "{searchQuery}"</h2>
 
                 <Grid container spacing={4}>
-                    {shoes.map((shoe) => (
+                    {searchResults.map((shoe) => (
                         <Grid
                             item
                             xs={12}
@@ -150,7 +111,7 @@ const Home: React.FC = () => {
                                         lg: 550
                                     },
                                     width: '100%',
-                                    position: 'relative' // Added to position the IconButton
+                                    position: 'relative'
                                 }}
                             >
                                 <CardActionArea
@@ -223,4 +184,4 @@ const Home: React.FC = () => {
     )
 }
 
-export default Home
+export default SearchResults
