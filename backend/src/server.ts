@@ -29,7 +29,8 @@ db.serialize(() => {
     price REAL,
     rating REAL,
     featured BOOLEAN,
-    image TEXT
+    image TEXT,
+    description TEXT
   )`)
 
     db.run(`CREATE TABLE cart_items (
@@ -41,38 +42,38 @@ db.serialize(() => {
         price REAL)`)
 
     // Placeholder bilder
-    db.run(`INSERT INTO shoes (name, price, rating, featured, image) VALUES
-  ('Blaze', 1384, 4.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Trail', 1426, 4.5, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Nexus', 1216, 4.1, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Fury', 1421, 4.7, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Fusion', 966, 4.9, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Rage', 965, 4.4, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Jordan', 1391, 3.0, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Pace', 685, 4.6, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Phantom', 1129, 2.7, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Pulse', 830, 4.5, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Comfort', 1404, 4.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Bolt', 717, 4.3, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Rebel', 1063, 4.5, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Inferno', 687, 2.1, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Wave', 804, 1.2, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Jolt', 1111, 4.4, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Zephyr', 784, 4.0, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Echo', 1108, 4.0, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Quake', 1034, 2.3, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Glide', 1035, 3.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Raptor', 1385, 4.8, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Yeezy', 705, 2.9, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Vibe', 831, 3.6, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Grit', 1117, 1.9, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Surge', 632, 3.9, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Vortex', 898, 4.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Titan', 916, 3.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Classic', 953, 5.0, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Zoom', 766, 4.1, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Maverick', 977, 4.7, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png'),
-('Sport', 1155, 4.5, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png')`)
+    db.run(`INSERT INTO shoes (name, price, rating, featured, image, description) VALUES
+  ('Blaze', 1384, 4.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Trail', 1426, 4.5, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Nexus', 1216, 4.1, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Fury', 1421, 4.7, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Fusion', 966, 4.9, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Rage', 965, 4.4, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Jordan', 1391, 3.0, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Pace', 685, 4.6, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Phantom', 1129, 2.7, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Pulse', 830, 4.5, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Comfort', 1404, 4.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Bolt', 717, 4.3, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Rebel', 1063, 4.5, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Inferno', 687, 2.1, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Wave', 804, 1.2, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Jolt', 1111, 4.4, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Zephyr', 784, 4.0, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Echo', 1108, 4.0, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Quake', 1034, 2.3, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Glide', 1035, 3.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Raptor', 1385, 4.8, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Yeezy', 705, 2.9, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Vibe', 831, 3.6, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Grit', 1117, 1.9, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Surge', 632, 3.9, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Vortex', 898, 4.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Titan', 916, 3.8, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Classic', 953, 5.0, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Zoom', 766, 4.1, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Maverick', 977, 4.7, false, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.'),
+('Sport', 1155, 4.5, true, 'https://www.pngall.com/wp-content/uploads/2/White-Sneakers-PNG-Clipart.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum, nulla feugiat ultrices ullamcorper, ex ante ultrices neque, sit amet pharetra sapien purus vitae neque. Aliquam ac dictum est.')`)
 })
 
 // Endpoint för att hämta alla skor, med sök och filter funktionalitet

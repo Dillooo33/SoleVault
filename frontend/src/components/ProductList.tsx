@@ -64,7 +64,7 @@ const Home: React.FC = () => {
         axios
             .post('http://localhost:8080/cart', {
                 name: shoe.name,
-                size: 'M',
+                size: '40',
                 color: 'Black',
                 quantity: 1,
                 price: shoe.price
