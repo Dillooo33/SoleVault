@@ -27,12 +27,12 @@ interface Shoe {
 }
 
 interface CartItem {
-    id: number;
-    name: string;
-    size: string;
-    color: string;
-    quantity: number;
-    price: number;
+    id: number
+    name: string
+    size: string
+    color: string
+    quantity: number
+    price: number
 }
 
 const Home: React.FC = () => {
@@ -88,126 +88,129 @@ const Home: React.FC = () => {
     return (
         <>
             <Hero />
-            <Box>
-                <Box sx={{ padding: 2 }}>
-                    <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                        sx={{ marginBottom: 2 }}
-                    >
-                        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                            Sneakers
-                        </Typography>
-                        <Link to={'/shoes'}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                sx={{
-                                    fontWeight: 'bold',
-                                    borderRadius: 50,
-                                    paddingX: 4,
-                                    paddingY: 1.2,
-                                    backgroundColor: '#1B3445',
-                                    fontSize: '0.8rem'
-                                }}
-                            >
-                                Visa alla skor
-                            </Button>
-                        </Link>
-                    </Box>
-                    <Divider sx={{ marginBottom: 2 }} />
-                    <Grid container spacing={4}>
-                        {shoes.map((shoe) => (
-                            <Grid
-                                item
-                                xs={12}
-                                sm={6}
-                                md={4}
-                                key={shoe.id}
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center'
-                                }}
-                            >
-                                <Card
-                                    sx={{
-                                        maxWidth: {
-                                            xs: 480,
-                                            sm: 400,
-                                            md: 450,
-                                            lg: 550
-                                        },
-                                        width: '100%',
-                                        position: 'relative'
-                                    }}
-                                >
-                                    <CardActionArea
-                                        style={{ textDecoration: 'none' }}
-                                    >
-                                        <Link
-                                            to={`/shoe/${shoe.id}`}
-                                            style={{
-                                                textDecoration: 'none',
-                                                color: 'inherit'
-                                            }}
-                                        >
-                                            <CardMedia
-                                                component="img"
-                                                sx={{
-                                                    height: '300px',
-                                                    objectFit: 'contain',
-                                                    padding: 1
-                                                }}
-                                                image={shoe.image}
-                                                alt={shoe.name}
-                                            />
-                                            <CardContent>
-                                                <Typography
-                                                    gutterBottom
-                                                    variant="h5"
-                                                    component="div"
-                                                >
-                                                    {shoe.name}
-                                                </Typography>
-                                                <Typography
-                                                    gutterBottom
-                                                    variant="subtitle1"
-                                                    component="div"
-                                                >
-                                                    {shoe.price} kr
-                                                </Typography>
-                                                <Rating
-                                                    name="half-rating-read"
-                                                    defaultValue={shoe.rating}
-                                                    precision={0.5}
-                                                    readOnly
-                                                />
-                                            </CardContent>
-                                        </Link>
-                                    </CardActionArea>
-                                    <IconButton
-                                        color="primary"
-                                        aria-label="add to shopping cart"
-                                        sx={{
-                                            position: 'absolute',
-                                            bottom: 16,
-                                            right: 16
-                                        }}
-                                        onClick={() => handleAddToCart(shoe)}
-                                        disabled={inCart[shoe.id]}
-                                    >
-                                        {inCart[shoe.id] ? (
-                                            <CheckCircleIcon />
-                                        ) : (
-                                            <AddShoppingCartIcon />
-                                        )}
-                                    </IconButton>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
+            <Box sx={{ padding: 2 }}>
+                <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={{ marginBottom: 2 }}
+                >
+                    <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                        Sneakers
+                    </Typography>
+                    <Link to={'/shoes'}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{
+                                fontWeight: 'bold',
+                                borderRadius: 50,
+                                paddingX: 4,
+                                paddingY: 1.2,
+                                backgroundColor: '#1B3445',
+                                fontSize: '0.8rem'
+                            }}
+                        >
+                            Visa alla skor
+                        </Button>
+                    </Link>
                 </Box>
+                <Divider sx={{ marginBottom: 2 }} />
+                <Box>
+                    <Typography variant="h5" sx={{ fontWeight: 'bold', marginY: 3, display: 'flex', justifyContent: 'center'}}>
+                        Bästsäljare
+                    </Typography>
+                </Box>
+                <Grid container spacing={4}>
+                    {shoes.map((shoe) => (
+                        <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            md={4}
+                            key={shoe.id}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <Card
+                                sx={{
+                                    maxWidth: {
+                                        xs: 480,
+                                        sm: 400,
+                                        md: 450,
+                                        lg: 550
+                                    },
+                                    width: '100%',
+                                    position: 'relative'
+                                }}
+                            >
+                                <CardActionArea
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    <Link
+                                        to={`/shoe/${shoe.id}`}
+                                        style={{
+                                            textDecoration: 'none',
+                                            color: 'inherit'
+                                        }}
+                                    >
+                                        <CardMedia
+                                            component="img"
+                                            sx={{
+                                                height: '300px',
+                                                objectFit: 'contain',
+                                                padding: 1
+                                            }}
+                                            image={shoe.image}
+                                            alt={shoe.name}
+                                        />
+                                        <CardContent>
+                                            <Typography
+                                                gutterBottom
+                                                variant="h5"
+                                                component="div"
+                                            >
+                                                {shoe.name}
+                                            </Typography>
+                                            <Typography
+                                                gutterBottom
+                                                variant="subtitle1"
+                                                component="div"
+                                            >
+                                                {shoe.price} kr
+                                            </Typography>
+                                            <Rating
+                                                name="half-rating-read"
+                                                defaultValue={shoe.rating}
+                                                precision={0.5}
+                                                readOnly
+                                            />
+                                        </CardContent>
+                                    </Link>
+                                </CardActionArea>
+                                <IconButton
+                                    color="primary"
+                                    aria-label="add to shopping cart"
+                                    sx={{
+                                        position: 'absolute',
+                                        bottom: 16,
+                                        right: 16
+                                    }}
+                                    onClick={() => handleAddToCart(shoe)}
+                                    disabled={inCart[shoe.id]}
+                                >
+                                    {inCart[shoe.id] ? (
+                                        <CheckCircleIcon />
+                                    ) : (
+                                        <AddShoppingCartIcon />
+                                    )}
+                                </IconButton>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
             </Box>
         </>
     )
