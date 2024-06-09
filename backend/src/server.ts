@@ -257,6 +257,20 @@ app.delete('/cart/:id', (req: Request, res: Response) => {
     })
 })
 
+//Endpoint för antal varor i kundvagnen
+app.get('/cart/count', (req: Request, res: Response) => {
+    db.get(
+        'SELECT SUM(quantity) as count FROM cart_items',
+        (err: Error, row: { count: number }) => {
+            if (err) {
+                res.status(500).send(err.message)
+            } else {
+                res.json({ count: row.count || 0 })
+            }
+        }
+    )
+})
+
 app.listen(port, () => {
     console.log(`Backend server running at http://localhost:${port}`)
 })
