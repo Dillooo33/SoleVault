@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import IconButton from '@mui/material/IconButton'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
+import CheckCircleIcon from '@mui/icons-material/RemoveShoppingCart'
 
 interface Shoe {
     id: number
@@ -27,6 +28,7 @@ interface Shoe {
 
 const Home: React.FC = () => {
     const [shoes, setShoes] = useState<Shoe[]>([])
+    const [inCart, setInCart] = useState<{ [key: number]: boolean }>({})
 
     useEffect(() => {
         axios
@@ -37,19 +39,34 @@ const Home: React.FC = () => {
             .catch((error) => {
                 console.error('Fel vid hämtning av skorna!', error)
             })
+
+        axios
+            .get('http://localhost:8080/cart')
+            .then((response) => {
+                const cartItems = response.data.items
+                const inCartMap: { [key: number]: boolean } = {}
+                cartItems.forEach((item: any) => {
+                    inCartMap[item.id] = true
+                })
+                setInCart(inCartMap)
+            })
+            .catch((error) => {
+                console.error('Fel vid hämtning av kundvagnen!', error)
+            })
     }, [])
 
     const handleAddToCart = (shoe: Shoe) => {
         axios
             .post('http://localhost:8080/cart', {
                 name: shoe.name,
-                size: 'M',
+                size: '40',
                 color: 'Black',
                 quantity: 1,
                 price: shoe.price
             })
             .then((response) => {
                 console.log('Item added to cart:', response.data)
+                setInCart((prevInCart) => ({ ...prevInCart, [shoe.id]: true }))
             })
             .catch((error) => {
                 console.error(
@@ -169,8 +186,13 @@ const Home: React.FC = () => {
                                             right: 16
                                         }}
                                         onClick={() => handleAddToCart(shoe)}
+                                        disabled={inCart[shoe.id]}
                                     >
-                                        <AddShoppingCartIcon />
+                                        {inCart[shoe.id] ? (
+                                            <CheckCircleIcon />
+                                        ) : (
+                                            <AddShoppingCartIcon />
+                                        )}
                                     </IconButton>
                                 </Card>
                             </Grid>

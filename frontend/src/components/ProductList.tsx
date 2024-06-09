@@ -15,6 +15,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
+import CheckCircleIcon from '@mui/icons-material/RemoveShoppingCart'
 import Box from '@mui/material/Box' // Ensure Box is imported
 
 interface Shoe {
@@ -28,6 +29,7 @@ interface Shoe {
 const Home: React.FC = () => {
     const [shoes, setShoes] = useState<Shoe[]>([])
     const [filter, setFilter] = useState<string>('id')
+    const [inCart, setInCart] = useState<{ [key: number]: boolean }>({})
 
     useEffect(() => {
         axios
@@ -37,6 +39,20 @@ const Home: React.FC = () => {
             })
             .catch((error) => {
                 console.error('Fel vid hämtning av skorna!', error)
+            })
+
+        axios
+            .get('http://localhost:8080/cart')
+            .then((response) => {
+                const cartItems = response.data.items
+                const inCartMap: { [key: number]: boolean } = {}
+                cartItems.forEach((item: any) => {
+                    inCartMap[item.id] = true
+                })
+                setInCart(inCartMap)
+            })
+            .catch((error) => {
+                console.error('Fel vid hämtning av kundvagnen!', error)
             })
     }, [filter])
 
@@ -48,13 +64,14 @@ const Home: React.FC = () => {
         axios
             .post('http://localhost:8080/cart', {
                 name: shoe.name,
-                size: 'M',
+                size: '40',
                 color: 'Black',
                 quantity: 1,
                 price: shoe.price
             })
             .then((response) => {
                 console.log('Item added to cart:', response.data)
+                setInCart((prevInCart) => ({ ...prevInCart, [shoe.id]: true }))
             })
             .catch((error) => {
                 console.error(
@@ -66,7 +83,7 @@ const Home: React.FC = () => {
 
     return (
         <div className="container">
-            <Box sx={{ padding: 4 }}>
+            <Box sx={{ padding: 2 }}>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link
                         to={'/'}
@@ -139,7 +156,11 @@ const Home: React.FC = () => {
                                     >
                                         <CardMedia
                                             component="img"
-                                            height="140"
+                                            sx={{
+                                                height: '300px',
+                                                objectFit: 'contain',
+                                                padding: 1
+                                            }}
                                             image={shoe.image}
                                             alt={shoe.name}
                                         />
@@ -148,7 +169,6 @@ const Home: React.FC = () => {
                                                 gutterBottom
                                                 variant="h5"
                                                 component="div"
-                                                style={{ fontSize: '1.5rem' }}
                                             >
                                                 {shoe.name}
                                             </Typography>
@@ -156,7 +176,6 @@ const Home: React.FC = () => {
                                                 gutterBottom
                                                 variant="subtitle1"
                                                 component="div"
-                                                style={{ fontSize: '1.25rem' }}
                                             >
                                                 {shoe.price} kr
                                             </Typography>
@@ -178,8 +197,13 @@ const Home: React.FC = () => {
                                         right: 16
                                     }}
                                     onClick={() => handleAddToCart(shoe)}
+                                    disabled={inCart[shoe.id]}
                                 >
-                                    <AddShoppingCartIcon />
+                                    {inCart[shoe.id] ? (
+                                        <CheckCircleIcon />
+                                    ) : (
+                                        <AddShoppingCartIcon />
+                                    )}
                                 </IconButton>
                             </Card>
                         </Grid>

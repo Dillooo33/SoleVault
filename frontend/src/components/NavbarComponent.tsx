@@ -13,7 +13,8 @@ import {
     ListItemText,
     Divider,
     Paper,
-    MenuItem
+    MenuItem,
+    Badge
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -21,6 +22,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Link } from 'react-router-dom'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import axios from 'axios'
 // Importera bilden
 import Logo from '../assets/bilder/Logo.png'
 
@@ -85,6 +87,22 @@ const Header: React.FC = () => {
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [searchInput, setSearchInput] = useState('')
     const [searchResults, setSearchResults] = useState([])
+    const [cartCount, setCartCount] = useState(0)
+
+    useEffect(() => {
+        // Hämta antalet varor i kundvagnen
+        const fetchCartCount = async () => {
+            try {
+                const response = await axios.get(
+                    'http://localhost:8080/cart/count'
+                )
+                setCartCount(response.data.count)
+            } catch (error) {
+                console.error('Error fetching cart count:', error)
+            }
+        }
+        fetchCartCount()
+    }, [])
 
     const handleDrawerOpen = () => {
         setDrawerOpen(true)
@@ -147,10 +165,16 @@ const Header: React.FC = () => {
                                 lineHeight: '1rem'
                             }}
                         >
-                            <Link to={'cart'}>
-                                <ShoppingCartIcon
-                                    sx={{ fontSize: '25px', color: 'black' }}
-                                />
+                            {/* cartCount ändras inte dynamiskt behöver ladda om sidan för att siffran ska bli rätt */}
+                            <Link to={'/cart'}>
+                                <Badge badgeContent={cartCount} color="error">
+                                    <ShoppingCartIcon
+                                        sx={{
+                                            fontSize: '25px',
+                                            color: 'black'
+                                        }}
+                                    />
+                                </Badge>
                             </Link>
                         </IconButton>
                         <IconButton

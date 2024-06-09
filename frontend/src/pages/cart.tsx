@@ -43,7 +43,6 @@ const Cart: React.FC = () => {
         fetchCartData()
     }, [])
 
-    //Denna funktion gör så att total priset uppdateras dynamiskt på sidan om man tycker på + eller - knapparna eller om man trycker på ta bort-knappen använder sen denna funktion i handleUpdateQuantity och i handleRemoveFromCart så att den vet vart den ska användas
     const fetchCartData = () => {
         axios
             .get('http://localhost:8080/cart')
@@ -59,7 +58,6 @@ const Cart: React.FC = () => {
             })
     }
 
-    //Funktionen gör bara så att om man trycker på + knappen så ökar den antalet av den varan trycker man på - knappen minskar den antalet av den varan
     const handleUpdateQuantity = (id: number, quantity: number) => {
         axios
             .put(`http://localhost:8080/cart/${id}`, { quantity })
@@ -103,178 +101,184 @@ const Cart: React.FC = () => {
                     Varor: {items.reduce((sum, item) => sum + item.quantity, 0)}
                 </Typography>
             </Box>
-            <Divider />
-            <Grid container spacing={4}>
-                <Grid item xs={12} md={8}>
-                    {items.map((item) => (
-                        <Box
-                            key={item.id}
-                            display="flex"
-                            marginBottom={2}
-                            marginTop={2}
-                            paddingBottom={2}
-                            alignItems="center"
-                            justifyContent="space-between"
-                            borderBottom="1px solid #e0e0e0"
-                        >
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                style={{
-                                    width: 80,
-                                    height: 80,
-                                    objectFit: 'cover'
-                                }}
-                            />
+            <Divider sx={{marginBottom: 10}}/>
+            {items.length === 0 ? (
+                <Box textAlign="center" marginTop={3}>
+                    <Typography variant="h6">Varukorgen är tom</Typography>
+                    <Divider sx={{marginTop: 10, marginBottom: 5}}/>
+                </Box>
+            ) : (
+                <Grid container spacing={4}>
+                    <Grid item xs={12} md={8}>
+                        {items.map((item) => (
                             <Box
-                                marginLeft={2}
-                                flexGrow={1}
-                                display={'flex'}
-                                flexDirection={'column'}
+                                key={item.id}
+                                display="flex"
+                                marginBottom={2}
+                                marginTop={2}
+                                paddingBottom={2}
+                                alignItems="center"
+                                justifyContent="space-between"
+                                borderBottom="1px solid #e0e0e0"
                             >
-                                <Typography variant="h6">
-                                    {item.name}
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    SEK {item.price}
-                                </Typography>
-                                <Box display="flex" marginTop={1} gap={1}>
-                                    {/* Select för färg och storlek är disabled för tillfället tills att vi fixar så att det finns olika och välja mellan */}
-                                    <Select
-                                        value={item.size}
-                                        disabled
-                                        size="small"
-                                    >
-                                        <MenuItem value={item.size}>
-                                            Storlek: {item.size}
-                                        </MenuItem>
-                                    </Select>
-                                    <Select
-                                        value={item.color}
-                                        disabled
-                                        size="small"
-                                    >
-                                        <MenuItem value={item.color}>
-                                            Färg: {item.color}
-                                        </MenuItem>
-                                    </Select>
-                                </Box>
+                                <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    style={{
+                                        width: 80,
+                                        height: 80,
+                                        objectFit: 'cover'
+                                    }}
+                                />
                                 <Box
-                                    display="flex"
-                                    alignItems="center"
-                                    marginTop={1}
+                                    marginLeft={2}
+                                    flexGrow={1}
+                                    display={'flex'}
+                                    flexDirection={'column'}
                                 >
-                                    <IconButton
-                                        onClick={() =>
-                                            handleUpdateQuantity(
-                                                item.id,
-                                                item.quantity - 1
-                                            )
-                                        }
-                                        disabled={item.quantity === 1}
+                                    <Typography variant="h6">
+                                        {item.name}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        SEK {item.price}
+                                    </Typography>
+                                    <Box display="flex" marginTop={1} gap={1}>
+                                        <Select
+                                            value={item.size}
+                                            disabled
+                                            size="small"
+                                        >
+                                            <MenuItem value={item.size}>
+                                                Storlek: {item.size}
+                                            </MenuItem>
+                                        </Select>
+                                        <Select
+                                            value={item.color}
+                                            disabled
+                                            size="small"
+                                        >
+                                            <MenuItem value={item.color}>
+                                                Färg: {item.color}
+                                            </MenuItem>
+                                        </Select>
+                                    </Box>
+                                    <Box
+                                        display="flex"
+                                        alignItems="center"
+                                        marginTop={1}
                                     >
-                                        <RemoveCircleOutlineIcon />
-                                    </IconButton>
-                                    <Typography>{item.quantity}</Typography>
-                                    <IconButton
-                                        onClick={() =>
-                                            handleUpdateQuantity(
-                                                item.id,
-                                                item.quantity + 1
-                                            )
-                                        }
-                                    >
-                                        <AddCircleOutlineIcon />
-                                    </IconButton>
-                                    <Button
-                                        startIcon={<DeleteIcon />}
-                                        variant="outlined"
-                                        color="error"
-                                        onClick={() =>
-                                            handleRemoveFromCart(item.id)
-                                        }
-                                        sx={{ marginLeft: 2 }}
-                                    >
-                                        Ta Bort
-                                    </Button>
+                                        <IconButton
+                                            onClick={() =>
+                                                handleUpdateQuantity(
+                                                    item.id,
+                                                    item.quantity - 1
+                                                )
+                                            }
+                                            disabled={item.quantity === 1}
+                                        >
+                                            <RemoveCircleOutlineIcon />
+                                        </IconButton>
+                                        <Typography>{item.quantity}</Typography>
+                                        <IconButton
+                                            onClick={() =>
+                                                handleUpdateQuantity(
+                                                    item.id,
+                                                    item.quantity + 1
+                                                )
+                                            }
+                                        >
+                                            <AddCircleOutlineIcon />
+                                        </IconButton>
+                                        <Button
+                                            startIcon={<DeleteIcon />}
+                                            variant="outlined"
+                                            color="error"
+                                            onClick={() =>
+                                                handleRemoveFromCart(item.id)
+                                            }
+                                            sx={{ marginLeft: 2 }}
+                                        >
+                                            Ta Bort
+                                        </Button>
+                                    </Box>
                                 </Box>
                             </Box>
-                        </Box>
-                    ))}
-                    <Box display="flex" marginTop={1}>
-                        <Typography>
-                            Gratis upphämtning i butik&nbsp;
-                        </Typography>
-                        <Link href="#" underline="always">
-                            Hitta butik
-                        </Link>
-                    </Box>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Box marginTop={2}>
-                        <Box marginBottom={2}>
-                            <TextField
-                                label="Har du en rabattkod?"
-                                variant="outlined"
-                                fullWidth
-                            />
-                        </Box>
-                        <Box marginBottom={2}>
-                            <TextField
-                                label="Presentkort?"
-                                variant="outlined"
-                                fullWidth
-                            />
-                        </Box>
-                        <Box
-                            display="flex"
-                            justifyContent="space-between"
-                            marginBottom={2}
-                            marginTop={5}
-                        >
-                            <Typography>Frakt:</Typography>
-                            <Typography>SEK {summary.shipping}</Typography>
-                        </Box>
-                        <Divider />
-                        <Box
-                            display="flex"
-                            justifyContent="space-between"
-                            marginBottom={2}
-                        >
-                            <Typography variant="h6">TOTAL:</Typography>
-                            <Typography variant="h6">
-                                SEK {summary.total}
-                            </Typography>
-                        </Box>
-                        <Divider />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            sx={{
-                                backgroundColor: '#57C7E5',
-                                color: 'black',
-                                borderRadius: '20px',
-                                fontWeight: 'bold',
-                                marginBottom: 2,
-                                marginTop: 3
-                            }}
-                        >
-                            Fortsätt
-                        </Button>
-                        <Box
-                            marginTop={2}
-                            marginBottom={2}
-                            textAlign={'center'}
-                        >
-                            <Typography>✔ 30 dagars öppet köp</Typography>
+                        ))}
+                        <Box display="flex" marginTop={1}>
                             <Typography>
-                                ✔ Fri frakt på order över 899:-
+                                Gratis upphämtning i butik&nbsp;
                             </Typography>
+                            <Link href="#" underline="always">
+                                Hitta butik
+                            </Link>
                         </Box>
-                    </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Box marginTop={2}>
+                            <Box marginBottom={2}>
+                                <TextField
+                                    label="Har du en rabattkod?"
+                                    variant="outlined"
+                                    fullWidth
+                                />
+                            </Box>
+                            <Box marginBottom={2}>
+                                <TextField
+                                    label="Presentkort?"
+                                    variant="outlined"
+                                    fullWidth
+                                />
+                            </Box>
+                            <Box
+                                display="flex"
+                                justifyContent="space-between"
+                                marginBottom={2}
+                                marginTop={5}
+                            >
+                                <Typography>Frakt:</Typography>
+                                <Typography>SEK {summary.shipping}</Typography>
+                            </Box>
+                            <Divider />
+                            <Box
+                                display="flex"
+                                justifyContent="space-between"
+                                marginBottom={2}
+                            >
+                                <Typography variant="h6">TOTAL:</Typography>
+                                <Typography variant="h6">
+                                    SEK {summary.total}
+                                </Typography>
+                            </Box>
+                            <Divider />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                sx={{
+                                    backgroundColor: '#57C7E5',
+                                    color: 'black',
+                                    borderRadius: '20px',
+                                    fontWeight: 'bold',
+                                    marginBottom: 2,
+                                    marginTop: 3
+                                }}
+                            >
+                                Fortsätt
+                            </Button>
+                            <Box
+                                marginTop={2}
+                                marginBottom={2}
+                                textAlign={'center'}
+                            >
+                                <Typography>✔ 30 dagars öppet köp</Typography>
+                                <Typography>
+                                    ✔ Fri frakt på order över 899:-
+                                </Typography>
+                            </Box>
+                        </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
+            )}
         </Container>
     )
 }
